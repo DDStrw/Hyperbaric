@@ -11,8 +11,55 @@ class BookingController extends Controller
     public function booking(){
         return view('booking');
     }
+    public function checkBooking(Request $request)
+    {
+        $kodeBooking = $request->input('kode_booking');
+    
+        // Assume you have a Booking model and the booking code is stored in a 'kode_booking' column
+        $booking = Booking::where('kode_booking', $kodeBooking)->first();
+    
+        if ($booking) {
+            // Booking found
+            return response()->json([
+                'status' => 'found',
+                'booking' => $booking
+            ]);
+        } else {
+            // Booking not found
+            return response()->json([
+                'status' => 'not_found',
+                'message' => 'Booking not found'
+            ]);
+        }
+    }
+    
+    
     public function cek(Request $request){
-        $booking = Booking::create($request->all());
+        // Validate the request data
+        $request->validate([
+            'kd_book' => 'required|string',
+            'bukti_bayar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Max 2MB
+        ]);
+
+        // Retrieve the booking code and file
+        $bookingCode = $request->input('kd_book');
+        $paymentProof = $request->file('bukti_bayar');
+
+        // Check if the booking code exists in the database
+        $booking = Booking::where('kode_booking', $bookingCode)->first();
+
+        if (!$booking) {
+            return redirect()->back()->withErrors(['kd_book' => 'Kode Booking tidak ditemukan.']);
+        }
+
+        // Handle the file upload
+        $path = $paymentProof->store('payment_proofs', 'public'); // Save in storage/app/public/payment_proofs
+
+        // You might want to update the booking record with the path to the proof of payment
+        $booking->update(['bukti_bayar' => $path]);
+
+        // Return a success response or redirect to a success page
+        return redirect()->back()->with('success', 'Bukti pembayaran berhasil diunggah.');
     }
     public function getSeatStatus(Request $request)
     {
@@ -40,6 +87,7 @@ class BookingController extends Controller
         ]);
 
         // Log the request data for debugging
+        
         \Log::info('Request Data: ', $request->all());
 
         // Create a new booking

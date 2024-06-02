@@ -9,7 +9,7 @@ class Booking extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'kode_booking', 'name', 'no_hp', 'alamat', 'tgl_booking', 'tgl_datang'
+        'kode_booking', 'name', 'no_hp', 'alamat', 'tgl_booking', 'tgl_datang', 'bukti_bayar'
     ];
 
     public function seats()

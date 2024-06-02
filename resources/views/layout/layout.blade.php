@@ -176,6 +176,7 @@
   @stack('custom-script')
   <!-- Vendor JS Files -->
   @stack('custom-script2')
+  @stack('custom-script3')
   <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
   <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>

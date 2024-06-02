@@ -39,7 +39,12 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link " id="kode_booking_tab" data-bs-toggle="tab"
                                 data-bs-target="#kode_booking" type="button" role="tab" aria-controls="booking"
-                                aria-selected="true">Booking</button>
+                                aria-selected="true">Validasi Booking</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="cek_kode_booking_tab" data-bs-toggle="tab"
+                                data-bs-target="#cek_kode_booking" type="button" role="tab"
+                                aria-controls="cek_kode_booking" aria-selected="false">Cek Kode Booking</button>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -50,7 +55,7 @@
                                 <div class="nav nav-fill my-3">
                                     <label class="nav-link shadow-sm step0 border ml-2 ">Identitas</label>
                                     <label class="nav-link shadow-sm step1 border ml-2 ">Detail</label>
-                                    {{-- <label class="nav-link shadow-sm step2 border ml-2 ">Pilih Kursi</label> --}}
+
                                 </div>
 
                                 <form action="/post" method="post" class="employee-form">
@@ -63,13 +68,11 @@
                                         <input type="text" class="form-control mb-3" name="no" required>
                                         <label for="">Alamat</label>
                                         <input type="text" class="form-control mb-3" name="alamat" required>
-
-                                        {{-- <label for="">Phone:</label>
-                  <input type="number" class="form-control mb-3" name="phone" required> --}}
                                     </div>
                                     <div class="form-section">
                                         <label for="">Tanggal Booking</label>
-                                        <input type="date" class="form-control mb-3" name="date" id="booking-date" required>
+                                        <input type="date" class="form-control mb-3" name="date" id="booking-date"
+                                            required>
                                         <ol class="cabin fuselage">
                                             <li class="row row--1">
                                                 <ol class="seats" type="A">
@@ -141,10 +144,7 @@
                                             </li>
                                         </ol>
                                     </div>
-                                    {{-- 
-                <div class="form-section">
-                  
-                </div> --}}
+
                                     <div class="form-navigation mt-4">
                                         <button type="button" class="previous btn btn-secondary float-left">&lt;
                                             Previous</button>
@@ -154,26 +154,100 @@
                                     </div>
                             </div>
                             </form>
+                            @if (session('success'))
+                                <div class="alert alert-success mt-3">{{ session('success') }}</div>
+                            @endif
+                        </div>
+
+
+                        <div class="tab-pane fade" id="kode_booking" role="tabpanel" aria-labelledby="kode_booking">
+                            <div class="card px-5 py-4 mt-5 shadow">
+                                <h1 class="text-center mt-3 mb-4">Validasi Kode Booking</h1>
+                                <form id="booking-form" action="{{ route('booking.check') }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-class">
+                                        <label for="">Kode Booking</label>
+                                        <input type="text" class="form-control mb-3" name="kd_book" required>
+                                        @error('kd_book')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                        <label for="">Upload Bukti Bayar</label>
+                                        <input type="file" class="form-control mb-3" name="bukti_bayar"
+                                            accept="image/*" required>
+                                        @error('bukti_bayar')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form mt-4">
+                                        <button type="submit" class="btn btn-success float-right">Submit</button>
+                                    </div>
+                                </form>
+
+                                <!-- Success and error messages -->
+                                @if (session('success'))
+                                    <div class="alert alert-success mt-3">{{ session('success') }}</div>
+                                @endif
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="cek_kode_booking" role="tabpanel"
+                            aria-labelledby="cek_kode_booking_tab">
+                            <div class="card px-5 py-4 mt-5 shadow">
+                                <h1 class="text-center mt-3 mb-4">Cek Kode Booking</h1>
+                                <form id="cek-kode-booking-form" action="/cek_kode_booking" method="post">
+                                    @csrf
+                                    <div class="form-class">
+                                        <label for="">Masukkan Kode Booking</label>
+                                        <input type="text" class="form-control mb-3" name="kode_booking" required>
+                                        @error('kode_booking')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form mt-4">
+                                        <button type="submit" class="btn btn-primary float-right">Cek Status</button>
+                                    </div>
+                                </form>
+
+                                @if (session('status'))
+                                    <div class="alert alert-info mt-3">{{ session('status') }}</div>
+                                @endif
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="statusModalLabel">Booking Status</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Content will be populated by JavaScript -->
+                                    <p id="modal-status-content"></p>
+                                    <ul id="modal-booking-details" style="display: none;">
+                                        <li><strong>Nama:</strong> <span id="detail-nama"></span></li>
+                                        <li><strong>Nomor:</strong> <span id="detail-nomor"></span></li>
+                                        <li><strong>Alamat:</strong> <span id="detail-alamat"></span></li>
+                                        <li><strong>Tanggal Booking:</strong> <span id="detail-tanggal"></span></li>
+                                        {{-- <li><strong>Kursi:</strong> <span id="detail-kursi"></span></li> --}}
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="kode_booking" role="tabpanel" aria-labelledby="kode_booking">
-                        <div class="card px-5 py-4 mt-5 shadow">
-                            <h1 class="text-center mt-3 mb-4">Cek Kode Booking</h1>
-                            <form action="/cek" method="post">
-                                @csrf
-                                <div class="form-class">
-                                    <label for="">Kode Booking</label>
-                                    <input type="text" class="form-control mb-3" name="kd_book" required>
-                                    <label for="">Upload Bukti Bayar</label>
-                                    <input type="file" class="form-control mb-3" name="bukti_bayar" accept="image/*"
-                                        required>
-                                </div>
-                                <div class="form mt-4">
-                                    <button type="submit" class="btn btn-success float-right">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+
+
                 </div>
 
 
@@ -269,14 +343,14 @@
         }
 
         /*
-          .seat input[type=checkbox]:disabled+label:after {
-            content: "OP";
-            text-indent: 0;
-            position: absolute;
-            top: 4px;
-            left: 50%;
-            transform: translate(-50%, 0%);
-          } */
+                                                          .seat input[type=checkbox]:disabled+label:after {
+                                                            content: "OP";
+                                                            text-indent: 0;
+                                                            position: absolute;
+                                                            top: 4px;
+                                                            left: 50%;
+                                                            transform: translate(-50%, 0%);
+                                                          } */
 
         .seat input[type=checkbox]:disabled+label:hover {
             box-shadow: none;
@@ -445,40 +519,43 @@
 @endpush
 
 @push('custom-script2')
-
-
 <script>
-$(document).ready(function() {
-    // Fungsi untuk memperbarui status kursi berdasarkan data dari server
-    function updateSeatStatus() {
-        var selectedDate = $('#booking-date').val(); // Mendapatkan tanggal booking yang dipilih
-        $.ajax({
-            url: '/get_seat_status', // URL endpoint untuk mendapatkan status kursi dari server
-            type: 'GET',
-            data: { date: selectedDate }, // Mengirimkan data tanggal booking ke server
-            success: function(response) {
-                // Jika respons berhasil diterima dari server
-                // response harus berisi data kursi yang sudah dipesan pada tanggal tersebut
-                response.forEach(function(seat) {
-                    // Menandai checkbox yang sesuai sebagai non-aktif (disabled)
-                    $('#' + seat).prop('disabled', true);
-                });
-            },
-            error: function(xhr, status, error) {
-                // Jika terjadi kesalahan saat mengambil data dari server
-                console.error(error);
-            }
+    $(document).ready(function() {
+        $('#cek-kode-booking-form').on('submit', function(event) {
+            event.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function(response) {
+                    if (response.status === 'found') {
+                        $('#modal-status-content').hide();
+                        $('#modal-booking-details').show();
+                        $('#detail-nama').text(response.booking.name);
+                        $('#detail-nomor').text(response.booking.no_hp);
+                        $('#detail-alamat').text(response.booking.alamat);
+                        $('#detail-tanggal').text(response.booking.tgl_datang);
+                        // $('#detail-kursi').text(response.booking.seats.join(', ')); // Assuming seats is an array
+                    } else {
+                        $('#modal-status-content').text(response.message).show();
+                        $('#modal-booking-details').hide();
+                    }
+                    $('#statusModal').modal('show');
+                },
+                error: function() {
+                    $('#modal-status-content').text('An error occurred. Please try again.').show();
+                    $('#modal-booking-details').hide();
+                    $('#statusModal').modal('show');
+                }
+            });
         });
-    }
-
-    // Panggil fungsi updateSeatStatus saat halaman dimuat
-    updateSeatStatus();
-
-    // Panggil fungsi updateSeatStatus saat tanggal booking berubah
-    $('#booking-date').change(function() {
-        updateSeatStatus();
     });
-});
 </script>
+@endpush
 
+@push('custom-script3')
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 @endpush
