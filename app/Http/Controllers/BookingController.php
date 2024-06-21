@@ -5,7 +5,9 @@ use App\Models\Booking;
 use App\Models\Seats;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use DB;
+use Illuminate\Support\Facades\DB;
+use App\Models\Booking_seat;
+
 class BookingController extends Controller
 {
     public function booking(){
@@ -13,54 +15,79 @@ class BookingController extends Controller
     }
     public function checkBooking(Request $request)
     {
-        $kodeBooking = $request->input('kode_booking');
+        try {
+            $kodeBooking = $request->input('kode_booking');
     
-        // Assume you have a Booking model and the booking code is stored in a 'kode_booking' column
-        $booking = Booking::where('kode_booking', $kodeBooking)->first();
+            // Retrieve the booking based on the booking code
+            $booking = Booking::where('kode_booking', $kodeBooking)->first();
     
-        if ($booking) {
-            // Booking found
+            if ($booking) {
+                // Booking found
+                // $bookingId = $booking->id;
+                // $seatlist = Seats::where('booking_id', $bookingId)->get();
+    
+                return response()->json([
+                    'status' => 'found',
+                    'booking' => $booking
+                    // 'seatlist' => $seatlist
+                ]);
+            } else {
+                // Booking not found
+                return response()->json([
+                    'status' => 'not_found',
+                    'message' => 'Booking not found'
+                ]);
+            }
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Error checking booking: ' . $e->getMessage());
+    
             return response()->json([
-                'status' => 'found',
-                'booking' => $booking
-            ]);
-        } else {
-            // Booking not found
-            return response()->json([
-                'status' => 'not_found',
-                'message' => 'Booking not found'
-            ]);
+                'status' => 'error',
+                'message' => 'An error occurred. Please try again.'
+            ], 500);
         }
     }
     
     
-    public function cek(Request $request){
+    
+    public function cek(Request $request)
+    {
         // Validate the request data
         $request->validate([
             'kd_book' => 'required|string',
             'bukti_bayar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Max 2MB
         ]);
-
+    
         // Retrieve the booking code and file
         $bookingCode = $request->input('kd_book');
         $paymentProof = $request->file('bukti_bayar');
-
+    
         // Check if the booking code exists in the database
         $booking = Booking::where('kode_booking', $bookingCode)->first();
-
+    
         if (!$booking) {
             return redirect()->back()->withErrors(['kd_book' => 'Kode Booking tidak ditemukan.']);
         }
-
+    
+        // Check if the booking already has a payment proof
+        if ($booking->bukti_bayar) {
+            return redirect()->back()->withErrors(['bukti_bayar' => 'Bukti pembayaran sudah ada.']);
+        }
+    
         // Handle the file upload
         $path = $paymentProof->store('payment_proofs', 'public'); // Save in storage/app/public/payment_proofs
-
-        // You might want to update the booking record with the path to the proof of payment
-        $booking->update(['bukti_bayar' => $path]);
-
+    
+        // Update the booking record with the path to the proof of payment
+        $booking->update(
+            ['bukti_bayar' => $path],
+            ['status' => 'Sudah Bayar']
+        );
+    
         // Return a success response or redirect to a success page
         return redirect()->back()->with('success', 'Bukti pembayaran berhasil diunggah.');
     }
+    
     public function getSeatStatus(Request $request)
     {
         // Ambil tanggal booking dari request
@@ -75,6 +102,7 @@ class BookingController extends Controller
         // Mengembalikan daftar kursi yang sudah dipesan dalam bentuk JSON
         return response()->json($bookedSeats);
     }
+
     public function store(Request $request){
         // Validate the request data
         $request->validate([
@@ -97,14 +125,19 @@ class BookingController extends Controller
             'no_hp' => $request->input('no'),
             'alamat' => $request->input('alamat'),
             'tgl_booking' => now(), // Assuming booking date is the current date
-            'tgl_datang' => $request->input('date')
+            'tgl_datang' => $request->input('date'),
+            'status' => 'Booking'
         ]);
 
         // Attach the selected seats to the booking
         foreach ($request->input('seats') as $kd_seat) {
             $seat = Seats::where('kd', $kd_seat)->first();
             if ($seat) {
-                $booking->seats()->attach($seat->id);
+            // Create a new BookingSeat entry
+            Booking_seat::create([
+                'booking_id' => $booking->id,
+                'seat_id' => $seat->id
+            ]);
             } else {
                 \Log::error('Seat not found: ' . $kd_seat);
             }
@@ -113,4 +146,19 @@ class BookingController extends Controller
         return redirect()->back()->with('success', 'Booking created successfully.');
     }
 
+
+    public function checkDate(Request $request)
+    {
+        $date = $request->input('date');
+    
+        $bookedSeats = Booking::join('booking_seat as bs', 'bookings.id', '=', 'bs.booking_id')
+            ->join('seats', 'bs.seat_id', '=', 'seats.kd')
+            ->where('bookings.tgl_datang', $date)
+            ->groupBy('seats.kd')
+            ->pluck('seats.kd')
+            ->toArray();
+    
+        return response()->json($bookedSeats);
+    }
+    
 }

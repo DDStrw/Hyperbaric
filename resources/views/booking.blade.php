@@ -61,7 +61,6 @@
                                 <form action="/post" method="post" class="employee-form">
                                     @csrf
                                     <div class="form-section">
-
                                         <label for="">Nama</label>
                                         <input type="text" class="form-control mb-3" name="name" required>
                                         <label for="">Nomor yang bisa dihubungi</label>
@@ -144,14 +143,12 @@
                                             </li>
                                         </ol>
                                     </div>
-
-                                    <div class="form-navigation mt-4">
-                                        <button type="button" class="previous btn btn-secondary float-left">&lt;
-                                            Previous</button>
-                                        <button type="button" class="next btn btn-secondary float-right">Next
-                                            &gt;</button>
-                                        <button type="submit" class="btn btn-primary float-right">Submit</button>
-                                    </div>
+                            </div>
+                            <div class="form-navigation mt-4">
+                                <button type="button" class="previous btn btn-secondary float-left">&lt;
+                                    Previous</button>
+                                <button type="button" class="next btn btn-secondary float-right">Next &gt;</button>
+                                <button type="submit" class="btn btn-primary float-right">Submit</button>
                             </div>
                             </form>
                             @if (session('success'))
@@ -236,7 +233,7 @@
                                         <li><strong>Nomor:</strong> <span id="detail-nomor"></span></li>
                                         <li><strong>Alamat:</strong> <span id="detail-alamat"></span></li>
                                         <li><strong>Tanggal Booking:</strong> <span id="detail-tanggal"></span></li>
-                                        {{-- <li><strong>Kursi:</strong> <span id="detail-kursi"></span></li> --}}
+                                        <li><strong>Kursi:</strong> <span id="detail-kursi"></span></li>
                                     </ul>
                                 </div>
                                 <div class="modal-footer">
@@ -343,14 +340,14 @@
         }
 
         /*
-                                                          .seat input[type=checkbox]:disabled+label:after {
-                                                            content: "OP";
-                                                            text-indent: 0;
-                                                            position: absolute;
-                                                            top: 4px;
-                                                            left: 50%;
-                                                            transform: translate(-50%, 0%);
-                                                          } */
+                                                                          .seat input[type=checkbox]:disabled+label:after {
+                                                                            content: "OP";
+                                                                            text-indent: 0;
+                                                                            position: absolute;
+                                                                            top: 4px;
+                                                                            left: 50%;
+                                                                            transform: translate(-50%, 0%);
+                                                                          } */
 
         .seat input[type=checkbox]:disabled+label:hover {
             box-shadow: none;
@@ -470,6 +467,7 @@
     </style>
 @endpush
 
+{{-- Tab pane --}}
 @push('custom-script')
     <script>
         $(function() {
@@ -518,44 +516,85 @@
     </script>
 @endpush
 
+{{-- Cek Booking --}}
 @push('custom-script2')
-<script>
-    $(document).ready(function() {
-        $('#cek-kode-booking-form').on('submit', function(event) {
-            event.preventDefault();
-            var form = $(this);
-            var url = form.attr('action');
+    <script>
+        $(document).ready(function() {
+            $('#cek-kode-booking-form').on('submit', function(event) {
+                event.preventDefault();
+                var form = $(this);
+                var url = form.attr('action');
 
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(),
-                success: function(response) {
-                    if (response.status === 'found') {
-                        $('#modal-status-content').hide();
-                        $('#modal-booking-details').show();
-                        $('#detail-nama').text(response.booking.name);
-                        $('#detail-nomor').text(response.booking.no_hp);
-                        $('#detail-alamat').text(response.booking.alamat);
-                        $('#detail-tanggal').text(response.booking.tgl_datang);
-                        // $('#detail-kursi').text(response.booking.seats.join(', ')); // Assuming seats is an array
-                    } else {
-                        $('#modal-status-content').text(response.message).show();
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (response.status === 'found') {
+                            $('#modal-status-content').hide();
+                            $('#modal-booking-details').show();
+                            $('#detail-nama').text(response.booking.name);
+                            $('#detail-nomor').text(response.booking.no_hp);
+                            $('#detail-alamat').text(response.booking.alamat);
+                            $('#detail-tanggal').text(response.booking.tgl_datang);
+
+                            // Create a list of seat numbers/names
+                            // var seatNumbers = response.seatlist.map(function(seat) {
+                            //     return seat.seat_id; // Adjust this based on your seat attribute
+                            // }).join(', ');
+
+                            // $('#detail-kursi').text(seatNumbers);
+                        } else if (response.status === 'not_found') {
+                            $('#modal-status-content').text(response.message).show();
+                            $('#modal-booking-details').hide();
+                        } else {
+                            $('#modal-status-content').text(
+                                'An error occurred. Please try again.').show();
+                            $('#modal-booking-details').hide();
+                        }
+                        $('#statusModal').modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText); // Log the response for debugging
+                        $('#modal-status-content').text('An error occurred. Please try again.')
+                            .show();
                         $('#modal-booking-details').hide();
+                        $('#statusModal').modal('show');
                     }
-                    $('#statusModal').modal('show');
-                },
-                error: function() {
-                    $('#modal-status-content').text('An error occurred. Please try again.').show();
-                    $('#modal-booking-details').hide();
-                    $('#statusModal').modal('show');
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
 @endpush
 
 @push('custom-script3')
-    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#booking-date').on('change', function() {
+                let selectedDate = $(this).val();
+                $.ajax({
+                    url: '{{ route('check.date') }}',
+                    type: 'POST',
+                    data: {
+                        date: selectedDate,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        // Enable all checkboxes initially
+                        $('input[type="checkbox"]').not('#OP1, #OP2').prop('disabled', false);
+
+                        // If response is not empty, disable checkboxes based on seat.kd
+                        if (response.length > 0) {
+                            response.forEach(function(seatKD) {
+                                $('[value="' + seatKD + '"]').prop('disabled', true);
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error checking date:', error);
+                    }
+                });
+            });
+        });
+    </script>
 @endpush
