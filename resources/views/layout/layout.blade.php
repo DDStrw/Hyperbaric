@@ -104,8 +104,8 @@
           <div class="footer-contact pt-3">
             <p>Jl. Gajah Mada No.95, Ngaglik, </p>
             <p>Kec. Batu, Kota Batu, Jawa Timur 65311</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+628</span></p>
-            <p><strong>Email:</strong> <span>info@example.com</span></p>
+            <p class="mt-3"><strong>Phone:</strong> <span>082130003801</span></p>
+            <p><strong>Email:</strong> <span>batubhayangkara@gmail.com</span></p>
           </div>
           <div class="social-links d-flex mt-4">
             <a href=""><i class="bi bi-twitter"></i></a>

@@ -22,7 +22,7 @@
     </section><!-- /Hero Section -->
 
     <!-- Featured Services Section -->
-    {{--<section id="featured-services" class="featured-services section">
+    {{-- <section id="featured-services" class="featured-services section">
 
       <div class="container">
 
@@ -63,7 +63,9 @@
 
       </div>
 
-    </section>--}}<!-- /Featured Services Section -->
+    </section> --}}
+    <!-- /Featured Services Section --> 
+   
 
     <!-- Clients Section -->
     {{--<section id="clients" class="clients section">
@@ -500,6 +502,89 @@
     
         </section><!-- /Faq Section --> --}}
 
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Paket</h2>
+        <p></p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+            <div class="pricing-item">
+              <h3>Paket 3x</h3>
+              <img src="{{ asset('assets/img/paket1.jpg') }}" class="img-fluid img-thumbnail mb-3" alt="Responsive image">
+              {{-- <p class="description">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
+              <h4><sup>$</sup>0<span> / month</span></h4>
+
+              <p class="text-center small">No credit card required</p> --}}
+              <a href="#" class="cta-btn">Pilih Paket</a>
+              {{-- <ul>
+                <li><i class="bi bi-check"></i> <span>Quam adipiscing vitae proin</span></li>
+                <li><i class="bi bi-check"></i> <span>Nec feugiat nisl pretium</span></li>
+                <li><i class="bi bi-check"></i> <span>Nulla at volutpat diam uteera</span></li>
+                <li class="na"><i class="bi bi-x"></i> <span>Pharetra massa massa ultricies</span></li>
+                <li class="na"><i class="bi bi-x"></i> <span>Massa ultricies mi quis hendrerit</span></li>
+                <li class="na"><i class="bi bi-x"></i> <span>Voluptate id voluptas qui sed aperiam rerum</span></li>
+                <li class="na"><i class="bi bi-x"></i> <span>Iure nihil dolores recusandae odit voluptatibus</span></li>
+              </ul> --}}
+            </div>
+          </div><!-- End Pricing Item -->
+
+          <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+            <div class="pricing-item ">
+              {{-- <p class="description">Popular</p> --}}
+              <h3>Paket 5x</h3>
+              <img src="{{ asset('assets/img/paket1.jpg') }}" class="img-fluid img-thumbnail mb-3" alt="Responsive image">
+              {{-- <p class="description">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
+              <h4><sup>$</sup>0<span> / month</span></h4>
+
+              <p class="text-center small">No credit card required</p> --}}
+              <a href="#" class="cta-btn">Pilih Paket</a>
+              {{-- <ul>
+                <li><i class="bi bi-check"></i> <span>Quam adipiscing vitae proin</span></li>
+                <li><i class="bi bi-check"></i> <span>Nec feugiat nisl pretium</span></li>
+                <li><i class="bi bi-check"></i> <span>Nulla at volutpat diam uteera</span></li>
+                <li><i class="bi bi-check"></i> <span>Pharetra massa massa ultricies</span></li>
+                <li><i class="bi bi-check"></i> <span>Massa ultricies mi quis hendrerit</span></li>
+                <li><i class="bi bi-check"></i> <span>Voluptate id voluptas qui sed aperiam rerum</span></li>
+                <li class="na"><i class="bi bi-x"></i> <span>Iure nihil dolores recusandae odit voluptatibus</span></li>
+              </ul> --}}
+            </div>
+          </div><!-- End Pricing Item -->
+
+          <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+            <div class="pricing-item">
+              <h3>Paket 10x</h3>
+              <img src="{{ asset('assets/img/paket1.jpg') }}" class="img-fluid img-thumbnail mb-3" alt="Responsive image">
+              {{-- <p class="description">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
+              <h4><sup>$</sup>0<span> / month</span></h4>
+
+              <p class="text-center small">No credit card required</p> --}}
+              <a href="#" class="cta-btn">Pilih Paket</a>
+              {{-- <ul>
+                <li><i class="bi bi-check"></i> <span>Quam adipiscing vitae proin</span></li>
+                <li><i class="bi bi-check"></i> <span>Nec feugiat nisl pretium</span></li>
+                <li><i class="bi bi-check"></i> <span>Nulla at volutpat diam uteera</span></li>
+                <li><i class="bi bi-check"></i> <span>Pharetra massa massa ultricies</span></li>
+                <li><i class="bi bi-check"></i> <span>Massa ultricies mi quis hendrerit</span></li>
+                <li><i class="bi bi-check"></i> <span>Voluptate id voluptas qui sed aperiam rerum</span></li>
+                <li><i class="bi bi-check"></i> <span>Iure nihil dolores recusandae odit voluptatibus</span></li>
+              </ul> --}}
+            </div>
+          </div><!-- End Pricing Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Pricing Section -->
+
     <!-- Contact Section -->
     <section id="contact" class="contact section">
 
@@ -525,7 +610,7 @@
             <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="300">
               <i class="bi bi-telephone"></i>
               <h3>Call Us</h3>
-              <p>08111111111</p>
+              <p>082130003801</p>
             </div>
           </div><!-- End Info Item -->
 
