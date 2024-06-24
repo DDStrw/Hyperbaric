@@ -394,9 +394,9 @@
               Terapi oksigen hiperbarik adalah suatu cara pengobatan di mana peserta terapi bernafas dengan menghirup oksigen murni (100%) di dalam ruang udara bertekanan tinggi lebih 1 Atmosfer Absolut. Terapi oksigen hiperbarik merupakan terapi utama penyakit penyelaman seperti Decompression Sickness dan Emboli Gas Arteri, juga terapi utama pada keracunan gas CO2,HCN,H2S, dan juga merupakan terapi tambahan pada berbagai penyakit klinis.
             </p>
             <ul>
-              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Penyembuhan Luka dan Infeksi</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Mengurangi Gejala Keracunan Karbon Monoksida</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Perbaikan Cedera Jaringan dan Penyakit Dekompresi </span></li>
             </ul>
             <a href="booking" class="read-more"><span>Booking</span><i class="bi bi-arrow-right"></i></a>
           </div>
