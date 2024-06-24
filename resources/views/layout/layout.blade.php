@@ -52,14 +52,14 @@
 
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <img src="{{ asset('assets/img/logo.png') }}" alt="">
-        <h1 class="sitename">Hyperbaric by Hasta Brata</h1>
+        <h1 class="sitename">Hyperbaric Dhira Brata</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="#hero" class="">Home</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          {{-- <li><a href="#features">Features</a></li>
+          <li><a href="#faq">FAQ</a></li> --}}
           <li><a href="#about">Booking</a></li>
           <!-- <li><a href="index.html#pricing">Pricing</a></li> -->
           <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -84,7 +84,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="index.html#about">Get Started</a>
+      <a class="btn-getstarted" href="#about">Get Started</a>
 
     </div>
   </header>
@@ -159,7 +159,7 @@
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        {{-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> --}}
       </div>
     </div>
 
