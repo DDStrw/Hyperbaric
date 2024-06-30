@@ -50,10 +50,10 @@
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <a href="/" class="logo d-flex align-items-center me-auto">
         <img src="{{ asset('assets/img/logo.png') }}" alt="">
         <h1 class="sitename">Hyperbaric Dhira Brata</h1>
-      </a>
+      </a>  
 
       <nav id="navmenu" class="navmenu">
         <ul>
@@ -108,10 +108,10 @@
             <p><strong>Email:</strong> <span>batubhayangkara@gmail.com</span></p>
           </div>
           <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter"></i></a>
+            <a href="https://www.youtube.com/@rsbhayangkarahastabratabat9852/featured" target="_blank"><i class="bi bi-youtube"></i></a>
             <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
+            <a href="https://www.instagram.com/rs.hastabratabatu_official/" target="_blank"><i class="bi bi-instagram"></i></a>
+            {{-- <a href=""><i class="bi bi-linkedin"></i></a> --}}
           </div>
         </div>
 
@@ -177,6 +177,7 @@
   <!-- Vendor JS Files -->
   @stack('custom-script2')
   @stack('custom-script3')
+  @stack('custom-script4')
   <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
   <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>

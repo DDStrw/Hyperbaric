@@ -1,5 +1,4 @@
 @extends('layout.layout')
-
 @section('content')
     <!-- Hero Section -->
     <section id="hero" class="hero section">
@@ -67,6 +66,14 @@
                                         <input type="text" class="form-control mb-3" name="no" required>
                                         <label for="">Alamat</label>
                                         <input type="text" class="form-control mb-3" name="alamat" required>
+                                        <label for="">Paket</label>
+                                        <select class="form-select" aria-label="Paket" name="paket">
+                                            <option selected>Pilih Paket</option>
+                                            <option value="0" {{ $selectedPackage == 0 ? 'selected' : '' }}>Tanpa Paket</option>
+                                            <option value="1" {{ $selectedPackage == 1 ? 'selected' : '' }}>Paket 3x Terapi</option>
+                                            <option value="2" {{ $selectedPackage == 2 ? 'selected' : '' }}>Paket 5x Terapi</option>
+                                            <option value="3" {{ $selectedPackage == 3 ? 'selected' : '' }}>Paket 10x Terapi</option>
+                                        </select>   
                                     </div>
                                     <div class="form-section">
                                         <label for="">Tanggal Booking</label>
@@ -597,4 +604,13 @@
             });
         });
     </script>
+@endpush
+@push('custom-script4')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        if (window.location.hash === "#about") {
+            document.getElementById("about").scrollIntoView();
+        }
+    });
+</script>
 @endpush

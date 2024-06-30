@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('alamat'); // Address
             $table->date('tgl_booking'); // Booking date
             $table->date('tgl_datang'); // Arrival date
-            $table->string('bukti_bayar')->nullable(); 
+            $table->string('bukti_bayar')->nullable();
+            $table->string('paket')->nullable(); 
             $table->string('status')->nullable()->default('NULL'); // Arrival date
             $table->timestamps(); // created_at and updated_at
         });

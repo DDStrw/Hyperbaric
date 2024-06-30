@@ -519,20 +519,15 @@
             <div class="pricing-item">
               <h3>Paket 3x</h3>
               <img src="{{ asset('assets/img/paket1.jpg') }}" class="img-fluid img-thumbnail mb-3" alt="Responsive image">
+                <form action="{{ route('paket') }}" method="GET">
+                  <input type="hidden" name="paket" value="1"> <!-- Paket 3x Terapi -->
+                  <button type="submit" class="cta-btn">Pilih Paket</button>
+                </form>
               {{-- <p class="description">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
               <h4><sup>$</sup>0<span> / month</span></h4>
 
               <p class="text-center small">No credit card required</p> --}}
-              <a href="#" class="cta-btn">Pilih Paket</a>
-              {{-- <ul>
-                <li><i class="bi bi-check"></i> <span>Quam adipiscing vitae proin</span></li>
-                <li><i class="bi bi-check"></i> <span>Nec feugiat nisl pretium</span></li>
-                <li><i class="bi bi-check"></i> <span>Nulla at volutpat diam uteera</span></li>
-                <li class="na"><i class="bi bi-x"></i> <span>Pharetra massa massa ultricies</span></li>
-                <li class="na"><i class="bi bi-x"></i> <span>Massa ultricies mi quis hendrerit</span></li>
-                <li class="na"><i class="bi bi-x"></i> <span>Voluptate id voluptas qui sed aperiam rerum</span></li>
-                <li class="na"><i class="bi bi-x"></i> <span>Iure nihil dolores recusandae odit voluptatibus</span></li>
-              </ul> --}}
+
             </div>
           </div><!-- End Pricing Item -->
 
@@ -541,11 +536,10 @@
               {{-- <p class="description">Popular</p> --}}
               <h3>Paket 5x</h3>
               <img src="{{ asset('assets/img/paket1.jpg') }}" class="img-fluid img-thumbnail mb-3" alt="Responsive image">
-              {{-- <p class="description">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-              <h4><sup>$</sup>0<span> / month</span></h4>
-
-              <p class="text-center small">No credit card required</p> --}}
-              <a href="#" class="cta-btn">Pilih Paket</a>
+                <form action="{{ route('paket') }}" method="GET">
+                  <input type="hidden" name="paket" value="2"> <!-- Paket 5x Terapi -->
+                  <button type="submit" class="cta-btn">Pilih Paket</button>
+                </form>
               {{-- <ul>
                 <li><i class="bi bi-check"></i> <span>Quam adipiscing vitae proin</span></li>
                 <li><i class="bi bi-check"></i> <span>Nec feugiat nisl pretium</span></li>
@@ -562,11 +556,10 @@
             <div class="pricing-item">
               <h3>Paket 10x</h3>
               <img src="{{ asset('assets/img/paket1.jpg') }}" class="img-fluid img-thumbnail mb-3" alt="Responsive image">
-              {{-- <p class="description">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-              <h4><sup>$</sup>0<span> / month</span></h4>
-
-              <p class="text-center small">No credit card required</p> --}}
-              <a href="#" class="cta-btn">Pilih Paket</a>
+                <form action="{{ route('paket') }}" method="GET">
+                  <input type="hidden" name="paket" value="3"> <!-- Paket 10x Terapi -->
+                  <button type="submit" class="cta-btn">Pilih Paket</button>
+                </form>
               {{-- <ul>
                 <li><i class="bi bi-check"></i> <span>Quam adipiscing vitae proin</span></li>
                 <li><i class="bi bi-check"></i> <span>Nec feugiat nisl pretium</span></li>

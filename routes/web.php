@@ -9,7 +9,8 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('booking', [BookingController::class, 'booking']);
+Route::get('booking', [BookingController::class, 'booking'])->name('booking');
+Route::get('/paket', [BookingController::class, 'paket'])->name('paket');
 Route::post('/post', [BookingController::class, 'store']);
 Route::post('/cek', [BookingController::class, 'cek'])->name('booking.check');
 Route::get('/get_seat_status', [BookingController::class, 'getSeatStatus']);

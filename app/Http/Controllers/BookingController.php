@@ -10,9 +10,17 @@ use App\Models\Booking_seat;
 
 class BookingController extends Controller
 {
-    public function booking(){
-        return view('booking');
+    public function booking(Request $request){
+        $selectedPackage = $request->session()->get('selectedPackage', 0);
+        return view('booking', compact('selectedPackage'));
     }
+    public function paket(Request $request){
+        $selectedPackage = $request->input('paket', 0); // Default to 0 if no package is selected
+        return redirect()->route('booking')
+                         ->with('selectedPackage', $selectedPackage)
+                         ->withFragment('about');
+    }
+    
     public function checkBooking(Request $request)
     {
         try {
@@ -118,15 +126,18 @@ class BookingController extends Controller
         
         \Log::info('Request Data: ', $request->all());
 
+
+        $bookingCode = Booking::generateBookingCode();
         // Create a new booking
         $booking = Booking::create([
-            'kode_booking' => uniqid(), // Generate a unique booking code
+            'kode_booking' => $bookingCode, // Generate a unique booking code
             'name' => $request->input('name'),
             'no_hp' => $request->input('no'),
             'alamat' => $request->input('alamat'),
             'tgl_booking' => now(), // Assuming booking date is the current date
             'tgl_datang' => $request->input('date'),
-            'status' => 'Booking'
+            'status' => 'Booking',
+            'paket' => $request->input('paket')
         ]);
 
         // Attach the selected seats to the booking
@@ -151,13 +162,15 @@ class BookingController extends Controller
     {
         $date = $request->input('date');
     
-        $bookedSeats = Booking::join('booking_seat as bs', 'bookings.id', '=', 'bs.booking_id')
-            ->join('seats', 'bs.seat_id', '=', 'seats.kd')
-            ->where('bookings.tgl_datang', $date)
-            ->groupBy('seats.kd')
-            ->pluck('seats.kd')
+        $bookedSeats = DB::table('seats as st')
+            ->join('booking_seat as bs', 'st.id', '=', 'bs.seat_id')
+            ->join('bookings as bk', 'bs.booking_id', '=', 'bk.id')
+            ->where('bk.tgl_datang', $date)
+            ->groupBy('st.kd')
+            ->pluck('st.kd')
             ->toArray();
     
+        // Log::info('Booked Seats:', $bookedSeats);
         return response()->json($bookedSeats);
     }
     
