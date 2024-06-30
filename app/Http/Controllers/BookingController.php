@@ -76,7 +76,7 @@ class BookingController extends Controller
         }
     
         // Handle the file upload
-        $path = $paymentProof->store('payment_proofs', 'public'); // Save in storage/app/public/payment_proofs
+        $path = $paymentProof->store('bukti_bayar', 'public'); // Save in storage/app/public/payment_proofs
     
         // Update the booking record with the path to the proof of payment
         $booking->update(

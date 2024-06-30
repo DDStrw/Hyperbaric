@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -18,4 +19,5 @@ Route::post('/check-date', [BookingController::class, 'checkDate'])->name('check
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+Route::post('',[AdminController::class]);
