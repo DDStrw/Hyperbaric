@@ -21,4 +21,4 @@ Route::post('/check-date', [BookingController::class, 'checkDate'])->name('check
 Auth::routes();
 
 Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-Route::post('',[AdminController::class]);
+Route::put('booking/{id}/validasi', [BookingController::class, 'validasi'])->name('booking.validasi');

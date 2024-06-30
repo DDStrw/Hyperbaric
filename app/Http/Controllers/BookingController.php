@@ -157,6 +157,19 @@ class BookingController extends Controller
         return redirect()->back()->with('success', 'Booking created successfully.');
     }
 
+    public function validasi($id)
+    {
+        // Temukan booking berdasarkan ID
+        $booking = Booking::findOrFail($id);
+
+        // Lakukan validasi status
+        $booking->status = 'Tervalidasi';
+        $booking->save();
+
+        // Redirect atau response sesuai kebutuhan
+        return redirect()->back()->with('success', 'Booking telah divalidasi.');
+    }
+
 
     public function checkDate(Request $request)
     {
